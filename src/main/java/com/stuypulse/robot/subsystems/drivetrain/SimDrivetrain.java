@@ -19,6 +19,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
@@ -148,6 +149,7 @@ public class SimDrivetrain extends IDrivetrain {
         field2d.getObject("real pose").setPose(truth.getPose());
 
         odometry.update(getRotation2d(), getSpeeds(), getLeftDistance(), getRightDistance());
+        odometry.addVisionMeasurement(truth.getPose(), Timer.getFPGATimestamp());
 
         field2d.getObject("estimated pose").setPose(odometry.getEstimatedPosition());
         field2d.getObject("sensor pose").setPose(simulation.getPose());
